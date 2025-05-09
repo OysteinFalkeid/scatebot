@@ -1,0 +1,2 @@
+[console_scripts]
+gamepad_joy = gamepad_joy.gamepad_to_joy:main
