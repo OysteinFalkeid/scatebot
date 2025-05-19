@@ -60,15 +60,15 @@ class GamepadTalker(Node):
             axes = [
                 self.gamepad.get_axis(0),
                 -self.gamepad.get_axis(1),
-                self.gamepad.get_axis(2),
                 self.gamepad.get_axis(3),
                 -self.gamepad.get_axis(4),
+                self.gamepad.get_axis(2),
                 self.gamepad.get_axis(5),
             ]
 
-            for i, ax in enumerate(axes):
-                if abs(ax) < 0.05:
-                    axes[i] = 0.0
+            # for i, ax in enumerate(axes):
+            #     if abs(ax) < 0.05:
+            #         axes[i] = 0.0
 
             
             message = Joy()
