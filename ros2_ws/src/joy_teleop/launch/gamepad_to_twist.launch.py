@@ -17,7 +17,7 @@ def generate_launch_description():
         executable="joy_teleop",
         output="screen",
         remappings=[
-            ("/teleop/joy", "/gamepad_joy/joy")
+            ("/joy", "/gamepad_joy/joy")
         ],
     )
 

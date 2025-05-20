@@ -8,7 +8,7 @@ from geometry_msgs.msg import Twist, Vector3
 
 class TeleopTalker(Node):
     def __init__(self):
-        super().__init__("imrt_teleop")
+        super().__init__("joy_teleop")
         self.subscriber = self.create_subscription(
             Joy,
             '/joy',
@@ -18,12 +18,11 @@ class TeleopTalker(Node):
         self.publisher_ = self.create_publisher(Twist, 'joy_twist', 10)
 
     def joy_callback(self, msg):
-        forward = 0.0
-
-        if msg.axes[3] > 0.15:
-            forward = (msg.axes[3]**2 + msg.axes[2]**2)**0.5*0.7-abs(msg.axes[2])*0.4
-        elif msg.axes[3] < -0.15:
-            forward = -(msg.axes[3]**2 + msg.axes[2]**2)**0.5*0.7-abs(msg.axes[2])*0.4
+        if abs(msg.axes[3]) > 0.001:
+            forward = msg.axes[3]
+        else:
+            forward = 0.0
+            
         rotation = -msg.axes[2]
         
         message = Twist()
