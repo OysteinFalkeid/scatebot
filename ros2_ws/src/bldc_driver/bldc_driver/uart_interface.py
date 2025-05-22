@@ -22,8 +22,12 @@ class UART_interface(Node):
         linear: Vector3 = msg.linear
         angular_list = [angular.x, angular.y, angular.z]
         linear_list = [linear.x, linear.y, linear.z]
-        self.get_logger().info(str(abs(linear_list[0])*254))
-        self.serial.write(bytes([int(abs(linear_list[0])*254)]))
+
+        byte_val = 255 - 255 * abs(linear_list[0])
+
+        # self.get_logger().info(str(byte_val))
+
+        self.serial.write(bytes([int(byte_val)]))
 
 def main(args=None):
     rclpy.init() 

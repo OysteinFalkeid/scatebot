@@ -6,22 +6,56 @@
 #include "motor_driver.h"
 
 
-uint8_t prescaler = 56;
-uint8_t my_values[3] = {ROTATION_0, ROTATION_1, ROTATION_2};
-uint8_t index = 0;
+volatile uint8_t prescaler = 254;
+volatile uint8_t my_values[4] = {(MOTOR0_ROTATION0 | MOTOR1_ROTATION0), (MOTOR0_ROTATION1 | MOTOR1_ROTATION1), (MOTOR0_ROTATION2 | MOTOR1_ROTATION2), 0};
+volatile uint8_t index = 0;
+volatile bool timer1_enabled = 0;
 
 ISR(TIMER0_OVF_vect) {
-  PORTB = ALL_Windings;
+  MOTOR_PORT = my_values[index];
 }
 
 ISR(TIMER0_COMPA_vect) {
-  PORTB = 0;
+  MOTOR_PORT = 0;
+}
+
+ISR(TIMER1_COMPA_vect) {
+  prescaler = 20;
+  index++;
+  if (index > 2) {
+    index = 0;
+  }
 }
 
 ISR(USART_RX_vect) {
   UCSR0B |= (1 << UDRIE0);
   prescaler = UDR0;
-  OCR0A = prescaler;
+
+  if (prescaler > 250) {
+    Timer1_disable();
+    timer1_enabled = 0;
+    MOTOR_DDR &= ~(MOTOR0_ALL_Windings | MOTOR1_ALL_Windings);
+    index = 3;
+  } 
+  else {
+
+    if (prescaler < 10) {
+      prescaler = 10;
+    }
+
+    if (~timer1_enabled) {
+      Timer1_enable();
+      timer1_enabled = 1;
+      MOTOR_DDR |= MOTOR1_ALL_Windings;
+      MOTOR_DDR |= MOTOR0_ALL_Windings;
+    }
+    
+    uint16_t temp = prescaler*100;
+    OCR1A = temp;
+    if (TCNT1 > temp) {
+      TCNT1 = temp - 10;
+    }
+  }
 }
 
 ISR(USART_UDRE_vect) {
@@ -35,18 +69,26 @@ int main(void) {
 
   // Set LED pin as output
   // DDRB |= (1 << LED_PIN);
-  DDRB |= ALL_Windings;
+  // MOTOR_DDR |= MOTOR1_ALL_Windings;
+  // MOTOR_DDR |= MOTOR0_ALL_Windings;
 
   // Disable unused peripherals
   power_adc_disable();
   power_spi_disable();
-  power_timer1_disable();
   power_twi_disable();
-
+  
   // Enable Timer0 only
   power_timer0_enable();
+  power_timer1_enable();
+  power_usart0_enable();
 
   setupTimer0();
+  setupTimer1();
+  timer1_enabled = 1;
+  Timer1_disable();
+  timer1_enabled = 0;
+  MOTOR_DDR &= ~(MOTOR0_ALL_Windings | MOTOR1_ALL_Windings);
+  index = 3;
   USART_init();
 
   sei();
@@ -54,8 +96,5 @@ int main(void) {
   while (1) {
     //idel
     sleep_mode();
-    // uint8_t byte = USART_receive();  // Block until byte is received
-    // prescaler = byte;
-    // USART_transmit(byte);           // Echo back
   }
 }
