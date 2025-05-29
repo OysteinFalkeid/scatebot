@@ -1,0 +1,15 @@
+[Unit]
+Description=ROS 2 Launch at Boot
+After=multi-user.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/opt/ros2-bringup/ros2_bringup.sh
+User=oystein
+WorkingDirectory=/home/oystein
+Environment=DISPLAY=:0
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

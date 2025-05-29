@@ -16,6 +16,8 @@ class GamepadTalker(Node):
         if self.gamepad_connected:
             self.get_logger().info("gamepad found")
             self.gamepad = pygame.joystick.Joystick(0)
+        else:
+            self.get_logger().warning("waiting for gamepad")
 
         self.publisher_ = self.create_publisher(Joy, 'joy', 10)
         timer_period = 0.02 
@@ -23,7 +25,6 @@ class GamepadTalker(Node):
     
     def reconect(self):
         if not self.gamepad_connected:
-            self.get_logger().warning("waiting for gamepad")
             pygame.joystick.quit()
             pygame.joystick.init()
             self.gamepad_connected = pygame.joystick.get_count() > 0
@@ -59,15 +60,15 @@ class GamepadTalker(Node):
             axes = [
                 self.gamepad.get_axis(0),
                 -self.gamepad.get_axis(1),
-                self.gamepad.get_axis(2),
                 self.gamepad.get_axis(3),
                 -self.gamepad.get_axis(4),
+                self.gamepad.get_axis(2),
                 self.gamepad.get_axis(5),
             ]
 
-            for i, ax in enumerate(axes):
-                if abs(ax) < 0.05:
-                    axes[i] = 0.0
+            # for i, ax in enumerate(axes):
+            #     if abs(ax) < 0.05:
+            #         axes[i] = 0.0
 
             
             message = Joy()
