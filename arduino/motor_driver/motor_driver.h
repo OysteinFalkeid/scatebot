@@ -73,6 +73,16 @@
 #define MOTOR1_PORT PORTB
 #define MOTOR1_DDR DDRB
 
+// Hallefect sensor defines motor 0
+#define HALL_SENS_0_MOTOR0 PC0
+#define HALL_SENS_1_MOTOR0 PC1
+#define HALL_SENS_2_MOTOR0 PC2
+
+// Hallefect sensor defines motor 1
+#define HALL_SENS_0_MOTOR0 PC3
+#define HALL_SENS_1_MOTOR0 PC4
+#define HALL_SENS_2_MOTOR0 PC5
+
 void setupTimer0_8pre_interupts(void) {
     // 8 prescaler
     TCCR0B = TCCR0_PRESCALE_8_MASK;
