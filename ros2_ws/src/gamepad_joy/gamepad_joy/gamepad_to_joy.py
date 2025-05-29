@@ -5,7 +5,6 @@ from rclpy.node import Node
 from sensor_msgs.msg import Joy
 import pygame
 from pygame.locals import *
-from time import strftime, localtime, time, sleep
 
 class GamepadTalker(Node):
     def __init__(self):

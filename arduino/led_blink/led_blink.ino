@@ -18,7 +18,7 @@ void setupTimer0() {
 
 ISR(TIMER0_COMPA_vect) {
   ticks++;
-  if (ticks >= 61) {                     // ~1 second
+  if (ticks >= 1) {                     // ~1 second
     PORTB ^= (1 << LED_PIN);             // Toggle LED
     ticks = 0;
   }
