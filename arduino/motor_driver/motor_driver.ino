@@ -7,7 +7,7 @@
 
 // Global variables
 volatile uint8_t prescaler = 254;
-volatile uint8_t motor0_commutation[7] = {MOTOR0_ROTATION0, MOTOR0_ROTATION1, MOTOR0_ROTATION2, MOTOR0_ROTATION3, MOTOR0_ROTATION4, MOTOR0_ROTATION5, 0};
+volatile uint8_t motor0_commutation[7] = {MOTOR0_ROTATION5, MOTOR0_ROTATION4, MOTOR0_ROTATION3, MOTOR0_ROTATION2, MOTOR0_ROTATION1, MOTOR0_ROTATION0, 0};
 volatile uint8_t motor1_commutation[7] = {MOTOR1_ROTATION0, MOTOR1_ROTATION1, MOTOR1_ROTATION2, MOTOR1_ROTATION3, MOTOR1_ROTATION4, MOTOR1_ROTATION5, 0};
 volatile uint8_t index = 0;
 volatile bool timer1_enabled = 0;
@@ -30,7 +30,7 @@ ISR(TIMER0_COMPA_vect) {
 ISR(TIMER1_COMPA_vect) {
   prescaler = 20;
   index++;
-  if (index > 6) {
+  if (index > 5) {
     index = 0;
   }
 }
