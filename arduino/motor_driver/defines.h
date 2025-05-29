@@ -1,13 +1,3 @@
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <avr/sleep.h>
-#include <avr/power.h>
-
-#include "masks.h"
-
-#define UBRR_VALUE ((F_CPU / (16UL * 9600)) - 1)
-#define LED_PIN PB5
-
 // Motor 1 defines
 #define MOTOR0_SIGNAL0_H PD7
 #define MOTOR0_SIGNAL0_L PD6
@@ -78,49 +68,11 @@
 #define HALL_SENS_1_MOTOR0 PC1
 #define HALL_SENS_2_MOTOR0 PC2
 
+#define HALL_SENS_MOTOR0_MASK (1 << HALL_SENS_0_MOTOR0) | (1 << HALL_SENS_1_MOTOR0) | (1 << HALL_SENS_2_MOTOR0)
+
 // Hallefect sensor defines motor 1
 #define HALL_SENS_0_MOTOR0 PC3
 #define HALL_SENS_1_MOTOR0 PC4
 #define HALL_SENS_2_MOTOR0 PC5
 
-void setupTimer0_8pre_interupts(void) {
-    // 8 prescaler
-    TCCR0B = TCCR0_PRESCALE_8_MASK;
-    // compare value of A
-    OCR0A = 240;    
-    // enable interupts
-    TIMSK0 = (1 << TOIE0) | (1 << OCIE0A) | (1 << OCIE0B);
-}
-
-void setupTimer1(void) {
-    TCCR1A = 0;
-    TCCR1B = TCCR1_PRESCALER_1024_MASK | (1 << WGM12);
-    TIMSK1 = (1 << OCIE1A);
-    OCR1A = 56000;
-    TCNT1 = 0;
-}
-
-void Timer1_disable(void) {
-    TCCR1B = 0;
-}
-
-void Timer1_enable(void) {
-    TCCR1B = TCCR1_PRESCALER_1024_MASK | (1 << WGM12);
-}
-
-
-void USART_init(void) {
-    // Set baud rate
-    UBRR0H = (uint8_t)(UBRR_VALUE >> 8);
-    UBRR0L = (uint8_t)(UBRR_VALUE);
-
-    // Enable receiver and transmitter and interupt on RX and empty TX buffer
-    UCSR0B = (1 << RXEN0);
-    UCSR0B |= (1 << TXEN0);
-    UCSR0B |= (1 << UDRIE0);
-    UCSR0B |= (1 << RXCIE0);
-
-    // Set frame format: 8 data bits, 1 stop bit, no parity
-    UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);
-}
-
+#define HALL_SENS_MOTOR1_MASK (1 << HALL_SENS_0_MOTOR1) | (1 << HALL_SENS_1_MOTOR1) | (1 << HALL_SENS_2_MOTOR1)
