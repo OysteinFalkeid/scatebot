@@ -56,7 +56,7 @@ void USART_init(void) {
 
     // Enable receiver and transmitter and interupt on RX and empty TX buffer
     UCSR0B = (1 << RXEN0);
-    UCSR0B |= (1 << TXEN0);
+    // UCSR0B |= (1 << TXEN0);
     UCSR0B |= (1 << UDRIE0);
     UCSR0B |= (1 << RXCIE0);
 

@@ -27,7 +27,10 @@ class UART_interface(Node):
 
         # self.get_logger().info(str(byte_val))
 
+        self.serial.write(bytes([int(255)]))
         self.serial.write(bytes([int(byte_val)]))
+        self.serial.write(bytes([int(byte_val)]))
+        self.serial.write(bytes([int(0)]))
 
 def main(args=None):
     rclpy.init() 

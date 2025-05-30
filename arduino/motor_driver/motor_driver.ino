@@ -41,35 +41,7 @@ ISR(TIMER2_COMPA_vect) {
 // USART
 // RX interupt resieving data
 ISR(USART_RX_vect) {
-  UCSR0B |= (1 << UDRIE0);
-  prescaler = UDR0;
-
-  if (prescaler > 250) {
-    Timer1_disable();
-    timer1_enabled = 0;
-    MOTOR0_DDR &= ~(MOTOR0_ALL_SIGNALS);
-    MOTOR1_DDR &= ~(MOTOR1_ALL_SIGNALS);
-    index = 6;
-  } 
-  else {
-
-    if (prescaler < 10) {
-      prescaler = 10;
-    }
-
-    if (~timer1_enabled) {
-      Timer1_enable();
-      timer1_enabled = 1;
-      MOTOR0_DDR |= MOTOR0_ALL_SIGNALS;
-      MOTOR1_DDR |= MOTOR1_ALL_SIGNALS;
-    }
-    
-    uint16_t temp = prescaler*100;
-    OCR1A = temp;
-    if (TCNT1 > temp) {
-      TCNT1 = temp - 10;
-    }
-  }
+  ISR_uart_RX_pointer();
 }
 
 // TX interupt
@@ -108,11 +80,12 @@ int main(void) {
   timer1_enabled = 0;
   MOTOR0_DDR &= ~(MOTOR0_ALL_SIGNALS);
   MOTOR1_DDR &= ~(MOTOR1_ALL_SIGNALS);
-  index = 6;
+  index_0 = 6;
+  index_1 = 6;
 
-  ISR_timer0_compA_pointer = ISR_timer0_compA_main;
-  ISR_timer1_compA_pointer = ISR_timer1_compA_main;
-  ISR_timer2_compA_pointer = ISR_timer2_compA_main;
+  ISR_timer0_compA_pointer = Nullptr;
+  ISR_timer1_compA_pointer = Nullptr;
+  ISR_timer2_compA_pointer = Nullptr;
   
   USART_init();
   
