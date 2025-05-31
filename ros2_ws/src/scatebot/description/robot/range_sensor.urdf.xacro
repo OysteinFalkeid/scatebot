@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="range_sensor">
+
+
+<xacro:arg name="robot_namespace" default="/" />
+
+<!-- ADD RANGE SENSOR MACRO -->
+  <xacro:macro name="add_range_sensor" params="sensor_name sensor_xyz sensor_rpy">
+
+    <link name="${sensor_name}">
+      <visual>
+        <geometry>
+          <box size="0.015 0.045 0.019" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="rangesens_blue">
+          <color rgba="0 0 1 1" />
+        </material>
+      </visual>
+    </link>
+
+    <joint name="${sensor_name}_joint" type="fixed">
+      <origin xyz="${sensor_xyz}" rpy="${sensor_rpy}" />
+      <parent link="base_footprint" />
+      <child link="${sensor_name}" />
+    </joint>
+
+    <gazebo reference="${sensor_name}">
+      <material>Gazebo/Blue</material>
+      <sensor type="gpu_lidar" name="${sensor_name}">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <topic>${sensor_name}</topic>
+        <gz_frame_id>${sensor_name}</gz_frame_id>
+        <lidar>
+           <scan>
+              <horizontal>
+                 <samples>10</samples>
+                 <resolution>1</resolution>
+                 <min_angle>-0.03</min_angle>
+                 <max_angle>0.03</max_angle>
+              </horizontal>
+              <vertical>
+                 <samples>10</samples>
+                 <resolution>1</resolution>
+                 <min_angle>-0.03</min_angle>
+                 <max_angle>0.03</max_angle>
+              </vertical>
+           </scan>
+           <range>
+              <min>0.01</min>
+              <max>2.55</max>
+              <resolution>0.01</resolution>
+           </range>
+        </lidar>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+
+  </robot>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="imrt_bot">
+
+    <xacro:arg name="ros2_control" default="true"/>
+    <xacro:arg name="sim_mode" default="false"/>
+
+    <xacro:include filename="robot/robot.urdf.xacro"/>
+
+    <xacro:if value="$(arg ros2_control)">
+        <xacro:include filename="control/ros2_controller.urdf.xacro"/>
+    </xacro:if>
+    <xacro:unless value="$(arg ros2_control)">
+        <xacro:include filename="control/gazebo_control.xacro"/>
+    </xacro:unless>
+
+</robot>

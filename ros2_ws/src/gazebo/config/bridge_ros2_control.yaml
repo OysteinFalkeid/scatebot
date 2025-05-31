@@ -1,0 +1,47 @@
+- ros_topic_name: "clock"
+  gz_topic_name: "clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+
+# gz topic published by IMU plugin
+- ros_topic_name: "imu"
+  gz_topic_name: "imu"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  direction: GZ_TO_ROS
+
+# gz topic published by Sensors plugin (LIDAR)
+- ros_topic_name: "scan/rangesens_1"
+  gz_topic_name: "rangesens_1"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+# gz topic published by Sensors plugin (LIDAR)
+- ros_topic_name: "scan/rangesens_2"
+  gz_topic_name: "rangesens_2"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+# gz topic published by Sensors plugin (LIDAR)
+- ros_topic_name: "scan/rangesens_3"
+  gz_topic_name: "rangesens_3"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+# gz topic published by Sensors plugin (LIDAR)
+- ros_topic_name: "scan/rangesens_4"
+  gz_topic_name: "rangesens_4"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+# gz topic published by Sensors plugin (Camera)
+- ros_topic_name: "camera/camera_info"
+  gz_topic_name: "camera/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
