@@ -3,6 +3,8 @@
 #include <avr/sleep.h>
 #include <avr/power.h>
 
+#ifndef MOTOR_MASKS
+#define MOTOR_MASKS
 
 // TCCR0B Timer 0 clock controll
 #define TCCR0_NO_CLOCK_MASK         0
@@ -32,3 +34,5 @@
 #define TCCR2_PRESCALER_1024_MASK   (1 << CS22) | (1 << CS20)
 #define TCCR2_EXTERN_FALLING_MASK   (1 << CS22) | (1 << CS21)
 #define TCCR2_EXTERN_RISING_MASK    (1 << CS22) | (1 << CS21) | (1 << CS20)
+
+#endif

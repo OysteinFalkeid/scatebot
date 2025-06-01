@@ -23,9 +23,11 @@ class UART_interface(Node):
         angular_list = [angular.x, angular.y, angular.z]
         linear_list = [linear.x, linear.y, linear.z]
 
-        byte_val = 255 - 255 * abs(linear_list[0])
+        byte_val = 120 - 120 * abs(linear_list[0])
+        if abs(linear_list[0]) < 0.2:
+            byte_val = 0.0
 
-        # self.get_logger().info(str(byte_val))
+        self.get_logger().info(str(byte_val))
 
         self.serial.write(bytes([int(255)]))
         self.serial.write(bytes([int(byte_val)]))

@@ -1,3 +1,7 @@
+
+#ifndef MOTOR_DEFINES
+#define MOTOR_DEFINES
+
 // Motor 1 defines
 #define MOTOR0_SIGNAL0_H PD7
 #define MOTOR0_SIGNAL0_L PD6
@@ -76,3 +80,6 @@
 #define HALL_SENS_2_MOTOR0 PC5
 
 #define HALL_SENS_MOTOR1_MASK (1 << HALL_SENS_0_MOTOR1) | (1 << HALL_SENS_1_MOTOR1) | (1 << HALL_SENS_2_MOTOR1)
+
+
+#endif
