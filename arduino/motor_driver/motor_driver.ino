@@ -14,6 +14,7 @@
 // Overflow interupt
 ISR(TIMER0_OVF_vect) {
   MOTOR0_PORT = motor0_floating[index_0];
+  MOTOR1_PORT = motor1_floating[index_1];
 }
 
 // Compare A interupt
@@ -22,24 +23,31 @@ ISR(TIMER0_COMPA_vect) {
   ISR_timer0_compA_pointer();
 }
 
-// Timer 1
 // Compare A interupt
-ISR(TIMER1_COMPA_vect) {
-  ISR_timer1_compA_pointer();
+ISR(TIMER0_COMPB_vect) {
+  // MOTOR0_PORT = motor0_commutation[index_0];
+  ISR_timer0_compB_pointer();
 }
 
-// Timer 2
-// Overflow interupt
-ISR(TIMER2_OVF_vect) {
-  MOTOR1_PORT = motor1_floating[index_0];
-}
+// // Timer 1
+// // Compare A interupt
+// ISR(TIMER1_COMPA_vect) {
+//   ISR_timer1_compA_pointer();
+// }
 
-// Compare A interupt
-ISR(TIMER2_COMPA_vect) {
-  // MOTOR1_PORT = motor1_commutation[0];
-  ISR_timer2_compA_pointer();
-  // ISR_timer2_compA_main_forward();
-}
+
+// // Timer 2
+// // Overflow interupt
+// ISR(TIMER2_OVF_vect) {
+//   MOTOR1_PORT = motor1_floating[index_1];
+// }
+
+// // Compare A interupt
+// ISR(TIMER2_COMPA_vect) {
+//   // MOTOR1_PORT = motor1_commutation[0];
+//   ISR_timer2_compA_pointer();
+//   // ISR_timer2_compA_main_forward();
+// }
 
 // USART
 // RX interupt resieving data
@@ -47,12 +55,12 @@ ISR(USART_RX_vect) {
   ISR_uart_RX_pointer();
 }
 
-// TX interupt
-// runs every time TX buffer is readdy
-ISR(USART_UDRE_vect) {
-  UCSR0B &= ~(1 << UDRIE0);
-  UDR0 = motor0_speed;
-}
+// // TX interupt
+// // runs every time TX buffer is readdy
+// ISR(USART_UDRE_vect) {
+//   UCSR0B &= ~(1 << UDRIE0);
+//   UDR0 = motor0_speed;
+// }
 
 
 int main(void) {
@@ -75,7 +83,7 @@ int main(void) {
   // MOTOR1_PORT |= (1 << 5);
   
   // ISR_timer2_compA_pointer = ISR_timer2_compA_boot_0;
-  SetupTimer2_8pre_interupts();
+  // SetupTimer2_8pre_interupts();
   // MOTOR1_PORT |= (1 << 5);
   
   // sei();
@@ -98,7 +106,7 @@ int main(void) {
 
   ISR_timer0_compA_pointer = ISR_timer0_compA_main_stop;
   // ISR_timer1_compA_pointer = Nullptr;
-  ISR_timer2_compA_pointer = ISR_timer2_compA_main_stop;
+  ISR_timer0_compB_pointer = ISR_timer2_compA_main_stop;
   ISR_uart_RX_pointer = ISR_UART_RX_0;
 
   // MOTOR1_PORT |= (1 << 5);

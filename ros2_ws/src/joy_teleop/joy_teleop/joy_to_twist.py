@@ -23,7 +23,12 @@ class TeleopTalker(Node):
         else:
             forward = 0.0
             
-        rotation = -msg.axes[2]
+        # rotation = -msg.axes[2]
+
+        if abs(msg.axes[2]) > 0.001:
+            rotation = -msg.axes[2]
+        else:
+            rotation = 0.0
         
         message = Twist()
         message.angular = Vector3(x=0.0, y=0.0, z=rotation)

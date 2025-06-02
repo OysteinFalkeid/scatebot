@@ -23,19 +23,26 @@ class UART_interface(Node):
         angular_list = [angular.x, angular.y, angular.z]
         linear_list = [linear.x, linear.y, linear.z]
 
-        byte_val = 120 - 120 * abs(linear_list[0])
-        if abs(linear_list[0]) < 0.001:
-            byte_val = 0.0
+        linear_speed = linear.x
+        angular_speed = angular.z
+        
+        byte_val_motor_0 =127 - 126 * (linear_speed)
+        if abs(linear_speed) < 0.0001:
+            byte_val_motor_0 = 0.0
 
-        self.get_logger().info(str(byte_val))
+        byte_val_motor_1 =127 - 126 * (angular_speed)
+        if abs(angular_speed) < 0.0001:
+            byte_val_motor_1 = 0.0
+
+        # self.get_logger().info(str(byte_val_motor_0))
 
         self.serial.write(bytes([int(255)]))
-        self.serial.write(bytes([int(byte_val)]))
-        self.serial.write(bytes([int(byte_val)]))
+        self.serial.write(bytes([int(byte_val_motor_0)]))
+        self.serial.write(bytes([int(byte_val_motor_1)]))
         self.serial.write(bytes([int(0)]))
 
         bytes_read = self.serial.read_all()
-        self.get_logger().info(str(bytes_read))
+        self.get_logger().info(str(bytes_read.hex()))
 
 def main(args=None):
     rclpy.init() 

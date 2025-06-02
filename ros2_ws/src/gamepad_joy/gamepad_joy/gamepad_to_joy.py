@@ -20,7 +20,7 @@ class GamepadTalker(Node):
             self.get_logger().warning("waiting for gamepad")
 
         self.publisher_ = self.create_publisher(Joy, 'joy', 10)
-        timer_period = 0.2 
+        timer_period = 0.05 
         self.timer = self.create_timer(timer_period, self.timer_callback)
     
     def reconect(self):

@@ -14,11 +14,11 @@ void setupPower(void) {
     power_adc_disable();
     power_spi_disable();
     power_twi_disable();
+    power_timer1_disable();
+    power_timer2_disable();
     
     // enable power
     power_timer0_enable();
-    power_timer1_enable();
-    power_timer2_enable();
     power_usart0_enable();
 }
 
@@ -32,11 +32,20 @@ void setupPorts_motor1(void) {
 
 void setupTimer0_8pre_interupts(void) {
     // 8 prescaler
-    TCCR0B = TCCR0_PRESCALE_8_MASK;
+    TCCR0B = TCCR0_PRESCALER_8_MASK;
     // compare value of A
-    OCR0A = 250;    
+    OCR0A = 253;    
     // enable interupts
-    TIMSK0 = (1 << TOIE0) | (1 << OCIE0A);// | (1 << OCIE0B);
+    TIMSK0 = (1 << TOIE0) | (1 << OCIE0A) | (1 << OCIE0B);
+}
+
+void setupTimer0_0pre_interupts(void) {
+    // 8 prescaler
+    TCCR0B = TCCR0_PRESCALER_0_MASK;
+    // compare value of A
+    OCR0A = 253;    
+    // enable interupts
+    TIMSK0 = (1 << TOIE0) | (1 << OCIE0A) | (1 << OCIE0B);
 }
 
 void setupTimer0_0pre_pwm(void) {
@@ -58,9 +67,9 @@ void setupTimer1(void) {
 
 void SetupTimer2_8pre_interupts(void) {
     // 8 prescaler
-    TCCR2B = TCCR2_PRESCALE_8_MASK;
+    TCCR2B = TCCR2_PRESCALER_8_MASK;
     // compare value of A
-    OCR2A = 250;
+    OCR2A = 120;
     // enable interupts
     TIMSK2 = (1 << TOIE2) | (1 << OCIE2A);// | (1 << OCIE2B);
 }
