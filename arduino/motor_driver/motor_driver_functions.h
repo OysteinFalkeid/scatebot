@@ -1,6 +1,4 @@
 
-#ifndef MOTOR_FUNCTIONS
-#define MOTOR_FUNCTIONS
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -9,6 +7,9 @@
 
 #include "defines.h"
 #include "motor_driver_setup.h"
+
+#ifndef MOTOR_FUNCTIONS
+#define MOTOR_FUNCTIONS
 
 // is sinusodial waveform is wanted this is an array form 0 to pi/2 with 255 steps.
 // created by gpt
@@ -24,12 +25,12 @@ extern volatile uint8_t motor1_commutation[7];
 extern volatile int8_t index_0;
 extern volatile int8_t index_1;
 extern volatile uint8_t index_boot;
-extern volatile int8_t counter_0;
-extern volatile int8_t counter_2;
+extern volatile int16_t counter_0;
+extern volatile int16_t counter_2;
 extern volatile bool timer1_enabled;
 
-extern volatile int8_t motor0_speed;
-extern volatile int8_t motor1_speed;
+extern volatile int16_t motor0_speed;
+extern volatile int16_t motor1_speed;
 
 
 extern volatile bool boot;
@@ -65,8 +66,6 @@ void Timer1_enable(void);
 // Timer 2
 void ISR_timer2_compA_boot_0(void);
 void ISR_timer2_compA_boot_1(void);
-
-void ISR_timer2_compA_main(void);
 
 void ISR_timer2_compA_main_forward(void);
 void ISR_timer2_compA_main_reverse(void);

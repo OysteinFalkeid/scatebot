@@ -34,7 +34,7 @@ void setupTimer0_8pre_interupts(void) {
     // 8 prescaler
     TCCR0B = TCCR0_PRESCALE_8_MASK;
     // compare value of A
-    OCR0A = 240;    
+    OCR0A = 250;    
     // enable interupts
     TIMSK0 = (1 << TOIE0) | (1 << OCIE0A);// | (1 << OCIE0B);
 }
@@ -52,7 +52,7 @@ void SetupTimer2_8pre_interupts(void) {
     // 8 prescaler
     TCCR2B = TCCR2_PRESCALE_8_MASK;
     // compare value of A
-    OCR2A = 240;
+    OCR2A = 250;
     // enable interupts
     TIMSK2 = (1 << TOIE2) | (1 << OCIE2A);// | (1 << OCIE2B);
 }
@@ -65,7 +65,7 @@ void USART_init(void) {
 
     // Enable receiver and transmitter and interupt on RX and empty TX buffer
     UCSR0B = (1 << RXEN0);
-    // UCSR0B |= (1 << TXEN0);
+    UCSR0B |= (1 << TXEN0);
     UCSR0B |= (1 << UDRIE0);
     UCSR0B |= (1 << RXCIE0);
 

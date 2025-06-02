@@ -29,12 +29,12 @@ volatile uint8_t motor1_commutation[7] = {MOTOR1_ROTATION0, MOTOR1_ROTATION1, MO
 volatile int8_t index_0 = 0;
 volatile int8_t index_1 = 0;
 volatile uint8_t index_boot = 0;
-volatile int8_t counter_0 = 0;
-volatile int8_t counter_2 = 0;
+volatile int16_t counter_0 = 0;
+volatile int16_t counter_2 = 0;
 volatile bool timer1_enabled = 0;
 
-volatile int8_t motor0_speed;
-volatile int8_t motor1_speed;
+volatile int16_t motor0_speed = (INT16_MAX -1)/8;
+volatile int16_t motor1_speed = (INT16_MAX -1)/8;
 
 
 volatile bool boot;
@@ -135,10 +135,6 @@ void ISR_timer2_compA_boot_1(void) {
     ISR_timer2_compA_pointer = ISR_timer2_compA_boot_0;
 }
 
-void ISR_timer2_compA_main(void) {
-    // MOTOR1_PORT = motor1_commutation[index_1];
-}
-
 void ISR_timer2_compA_main_forward(void) {
     MOTOR1_PORT |= motor1_commutation[index_1];
     counter_2++;
@@ -171,13 +167,15 @@ void ISR_timer2_compA_main_stop(void) {
 void ISR_UART_RX_0(void) {
     int8_t data;
     data = UDR0;
+    // UCSR0B |= (1 << UDRIE0);
     if (data = UINT8_MAX) {
         ISR_uart_RX_pointer = ISR_UART_RX_1;
     }
 }
 
 void ISR_UART_RX_1(void) {
-    motor0_speed = UDR0;
+    motor0_speed = (UDR0 << 7);
+    // UCSR0B |= (1 << UDRIE0);
     if (motor0_speed > 0) {
         ISR_timer0_compA_pointer = ISR_timer0_compA_main_forward;
     }else if (motor0_speed < 0) {
@@ -189,7 +187,8 @@ void ISR_UART_RX_1(void) {
 }
 
 void ISR_UART_RX_2(void) {
-    motor1_speed = UDR0;
+    motor1_speed = (UDR0 << 7);
+    // UCSR0B |= (1 << UDRIE0);
     if (motor1_speed > 0) {
         ISR_timer2_compA_pointer = ISR_timer2_compA_main_forward;
     }else if (motor0_speed < 0) {
@@ -203,7 +202,8 @@ void ISR_UART_RX_2(void) {
 void ISR_UART_RX_3(void) {
     int8_t data;
     data = UDR0;
-    if (data = 0) {
+    // UCSR0B |= (1 << UDRIE0);
+    if (data == 0) {
         ISR_uart_RX_pointer = ISR_UART_RX_0;
     }
 }

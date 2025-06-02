@@ -24,7 +24,7 @@ class UART_interface(Node):
         linear_list = [linear.x, linear.y, linear.z]
 
         byte_val = 120 - 120 * abs(linear_list[0])
-        if abs(linear_list[0]) < 0.2:
+        if abs(linear_list[0]) < 0.001:
             byte_val = 0.0
 
         self.get_logger().info(str(byte_val))
@@ -33,6 +33,9 @@ class UART_interface(Node):
         self.serial.write(bytes([int(byte_val)]))
         self.serial.write(bytes([int(byte_val)]))
         self.serial.write(bytes([int(0)]))
+
+        bytes_read = self.serial.read_all()
+        self.get_logger().info(str(bytes_read))
 
 def main(args=None):
     rclpy.init() 
