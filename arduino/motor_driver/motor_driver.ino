@@ -13,7 +13,7 @@
 // Timer 0
 // Overflow interupt
 ISR(TIMER0_OVF_vect) {
-  MOTOR0_PORT = 0;
+  MOTOR0_PORT = motor0_floating[index_0];
 }
 
 // Compare A interupt
@@ -31,7 +31,7 @@ ISR(TIMER1_COMPA_vect) {
 // Timer 2
 // Overflow interupt
 ISR(TIMER2_OVF_vect) {
-  MOTOR1_PORT = 0;
+  MOTOR1_PORT = motor1_floating[index_0];
 }
 
 // Compare A interupt

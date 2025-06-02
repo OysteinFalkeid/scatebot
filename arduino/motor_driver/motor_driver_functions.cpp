@@ -25,7 +25,9 @@ const uint8_t sine_table[128] PROGMEM = {
 // Global variables
 volatile uint8_t prescaler = 254;
 volatile uint8_t motor0_commutation[7] = {MOTOR0_ROTATION5, MOTOR0_ROTATION4, MOTOR0_ROTATION3, MOTOR0_ROTATION2, MOTOR0_ROTATION1, MOTOR0_ROTATION0, 0};
+volatile uint8_t motor0_floating[7] = {MOTOR0_ROTATION5, MOTOR0_ROTATION4, MOTOR0_ROTATION3, MOTOR0_ROTATION2, MOTOR0_ROTATION1, MOTOR0_ROTATION0, 0};
 volatile uint8_t motor1_commutation[7] = {MOTOR1_ROTATION0, MOTOR1_ROTATION1, MOTOR1_ROTATION2, MOTOR1_ROTATION3, MOTOR1_ROTATION4, MOTOR1_ROTATION5, 0};
+volatile uint8_t motor1_floating[7] = {MOTOR1_ROTATION0, MOTOR1_ROTATION1, MOTOR1_ROTATION2, MOTOR1_ROTATION3, MOTOR1_ROTATION4, MOTOR1_ROTATION5, 0};
 volatile int8_t index_0 = 0;
 volatile int8_t index_1 = 0;
 volatile uint8_t index_boot = 0;
@@ -33,8 +35,8 @@ volatile int16_t counter_0 = 0;
 volatile int16_t counter_2 = 0;
 volatile bool timer1_enabled = 0;
 
-volatile int16_t motor0_speed = (INT16_MAX -1)/8;
-volatile int16_t motor1_speed = (INT16_MAX -1)/8;
+volatile int16_t motor0_speed = 0;
+volatile int16_t motor1_speed = 0;
 
 
 volatile bool boot;
@@ -66,7 +68,8 @@ void ISR_timer0_compA_boot_1(void) {
 }
 
 void ISR_timer0_compA_main_forward(void) {
-    MOTOR0_PORT |= motor0_commutation[index_0];
+    MOTOR0_PORT = motor0_commutation[index_0];
+    sei();
     counter_0++;
     if (counter_0 > motor0_speed) {
         counter_0 = 0;
@@ -78,7 +81,8 @@ void ISR_timer0_compA_main_forward(void) {
 }
 
 void ISR_timer0_compA_main_reverse(void) {
-    MOTOR0_PORT |= motor0_commutation[index_0];
+    MOTOR0_PORT = motor0_commutation[index_0];
+    sei();
     counter_0--;
     if (counter_0 < motor0_speed) {
         counter_0 = 0;
@@ -90,7 +94,8 @@ void ISR_timer0_compA_main_reverse(void) {
 }
 
 void ISR_timer0_compA_main_stop(void) {
-    MOTOR0_PORT = 0;
+    index_0 = 6;
+    MOTOR0_PORT = motor0_commutation[index_0];
 }
 
 // Timer 1
@@ -124,19 +129,19 @@ void Timer1_enable(void) {
 
 // Timer 2
 void ISR_timer2_compA_boot_0(void) {
-    MOTOR1_PORT |= motor1_commutation[index_1];
+    MOTOR1_PORT = motor1_commutation[index_1];
     index_1++;
     ISR_timer2_compA_pointer = ISR_timer2_compA_boot_1;
 }
 
 void ISR_timer2_compA_boot_1(void) {
-    MOTOR1_PORT |= motor1_commutation[index_1];
+    MOTOR1_PORT = motor1_commutation[index_1];
     index_1--;
     ISR_timer2_compA_pointer = ISR_timer2_compA_boot_0;
 }
 
 void ISR_timer2_compA_main_forward(void) {
-    MOTOR1_PORT |= motor1_commutation[index_1];
+    MOTOR1_PORT = motor1_commutation[index_1];
     counter_2++;
     if (counter_2 > motor1_speed) {
         counter_2 = 0;

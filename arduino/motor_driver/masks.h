@@ -8,6 +8,7 @@
 
 // TCCR0B Timer 0 clock controll
 #define TCCR0_NO_CLOCK_MASK         0
+#define TCCR0_PRESCALER_0_MASK      (1 << CS00)
 #define TCCR0_PRESCALE_8_MASK       (1 << CS01)
 #define TCCR0_PRESCALE_64_MASK      (1 << CS01) | (1 << CS00)
 #define TCCR0_PRESCALER_256_MASK    (1 << CS02)
@@ -18,6 +19,7 @@
 
 // TCCR1B Timer 1 clock controll
 #define TCCR1_NO_CLOCK_MASK         0
+#define TCCR1_PRESCALER_0_MASK      (1 << CS10)
 #define TCCR1_PRESCALE_8_MASK       (1 << CS11)
 #define TCCR1_PRESCALE_64_MASK      (1 << CS11) | (1 << CS10)
 #define TCCR1_PRESCALER_256_MASK    (1 << CS12)
@@ -28,6 +30,7 @@
 
 // TCCR2B Timer 2 clock controll
 #define TCCR2_NO_CLOCK_MASK         0
+#define TCCR2_PRESCALER_0_MASK      (1 << CS20)
 #define TCCR2_PRESCALE_8_MASK       (1 << CS21)
 #define TCCR2_PRESCALE_64_MASK      (1 << CS21) | (1 << CS20)
 #define TCCR2_PRESCALER_256_MASK    (1 << CS22)

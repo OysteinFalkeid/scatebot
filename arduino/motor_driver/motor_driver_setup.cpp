@@ -39,6 +39,14 @@ void setupTimer0_8pre_interupts(void) {
     TIMSK0 = (1 << TOIE0) | (1 << OCIE0A);// | (1 << OCIE0B);
 }
 
+void setupTimer0_0pre_pwm(void) {
+    TCCR0B = TCCR0_PRESCALER_0_MASK;
+    TCCR0A = (1 << WGM00) | (1 << WGM01);
+    OCR0A = UINT8_MAX / 2;
+    OCR0B = UINT8_MAX / 2;
+    TIMSK0 = (1 << TOIE0);
+}
+
 void setupTimer1(void) {
     TCCR1A = 0;
     TCCR1B = TCCR1_PRESCALER_1024_MASK | (1 << WGM12);

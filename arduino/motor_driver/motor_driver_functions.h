@@ -21,7 +21,9 @@ extern const uint8_t sine_table[128];
 // Global variables
 extern volatile uint8_t prescaler;
 extern volatile uint8_t motor0_commutation[7];
+extern volatile uint8_t motor0_floating[7];
 extern volatile uint8_t motor1_commutation[7];
+extern volatile uint8_t motor1_floating[7];
 extern volatile int8_t index_0;
 extern volatile int8_t index_1;
 extern volatile uint8_t index_boot;

@@ -18,6 +18,7 @@ void setupPorts_motor0(void);
 void setupPorts_motor1(void);
 
 void setupTimer0_8pre_interupts(void);
+void setupTimer0_0pre_pwm(void);
 
 void setupTimer1(void);
 
