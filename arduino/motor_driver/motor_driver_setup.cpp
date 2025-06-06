@@ -14,12 +14,13 @@ void setupPower(void) {
     power_adc_disable();
     power_spi_disable();
     power_twi_disable();
-    power_timer1_disable();
     power_timer2_disable();
+    // power_timer2_disable();
     
     // enable power
     power_timer0_enable();
     power_usart0_enable();
+    power_timer1_enable();
 }
 
 void setupPorts_motor0(void) {
@@ -62,6 +63,15 @@ void setupTimer1(void) {
     TIMSK1 = (1 << OCIE1A);
     OCR1A = UINT16_MAX-1;
     TCNT1 = 0;
+}
+
+void setupTimer1_UCSR0B(void) {
+    TCCR1A = 0;
+    TCCR1B = TCCR1_PRESCALER_1024_MASK; // prescaler
+    TCCR1B |= (1 << WGM12); // CTC
+    TIMSK1 = (1 << OCIE1A); // COMP A interupt enable
+    OCR1A = 157; // compare value
+    TCNT1 = 0; // actual counted value restarting the counter
 }
 
 

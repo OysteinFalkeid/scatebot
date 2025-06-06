@@ -66,6 +66,8 @@ void ISR_timer1_compA_main(void);
 void Timer1_disable(void);
 void Timer1_enable(void);
 
+void ISR_timer1_compA_UCSR0B(void);
+
 // Timer 2
 void ISR_timer2_compA_boot_0(void);
 void ISR_timer2_compA_boot_1(void);

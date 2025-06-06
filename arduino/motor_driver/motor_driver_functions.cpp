@@ -28,9 +28,9 @@ volatile uint8_t motor0_commutation[8] = {MOTOR0_ROTATION5, MOTOR0_ROTATION4, MO
 volatile uint8_t motor0_floating[8] = {MOTOR0_FLOATING5, MOTOR0_FLOATING4, MOTOR0_FLOATING3, MOTOR0_FLOATING2, MOTOR0_FLOATING1, MOTOR0_FLOATING0, 0, 0};
 volatile uint8_t motor1_commutation[8] = {MOTOR1_ROTATION0, MOTOR1_ROTATION1, MOTOR1_ROTATION2, MOTOR1_ROTATION3, MOTOR1_ROTATION4, MOTOR1_ROTATION5, 0, 0};
 volatile uint8_t motor1_floating[8] = {MOTOR1_FLOATING0, MOTOR1_FLOATING1, MOTOR1_FLOATING2, MOTOR1_FLOATING3, MOTOR1_FLOATING4, MOTOR1_FLOATING5, 0, 0};
+
 volatile int8_t index_0 = 0;
 volatile int8_t index_1 = 0;
-volatile uint8_t index_boot = 0;
 volatile int16_t counter_0 = 0;
 volatile int16_t counter_2 = 0;
 volatile bool timer1_enabled = 0;
@@ -40,6 +40,7 @@ volatile int16_t motor1_speed = 0;
 
 
 volatile bool boot;
+volatile uint8_t index_boot = 0;
 
 
 // function pointers
@@ -128,6 +129,10 @@ void Timer1_enable(void) {
     TCCR1B = TCCR1_PRESCALER_1024_MASK | (1 << WGM12);
 }
 
+void ISR_timer1_compA_UCSR0B(void) {
+    UCSR0B |= (1 << UDRIE0);
+}
+
 // Timer 2
 void ISR_timer2_compA_boot_0(void) {
     MOTOR1_PORT = motor1_commutation[index_1];
@@ -186,8 +191,8 @@ void ISR_UART_RX_1(void) {
     int8_t data;
     data = UDR0;
     motor0_speed = ((data & (1 << 7)) << 8) | (data << 7);
-    // UCSR0B |= (1 << UDRIE0);
-    UDR0 = (motor0_speed >> 7);
+    // // UCSR0B |= (1 << UDRIE0);
+    // UDR0 = (motor0_speed >> 7);
     if (motor0_speed > 0) {
         ISR_timer0_compA_pointer = ISR_timer0_compA_main_forward;
     }else if (motor0_speed < 0) {
@@ -202,8 +207,8 @@ void ISR_UART_RX_2(void) {
     int8_t data;
     data = UDR0;
     motor1_speed = ((data & (1 << 7)) << 8) | (data << 7);
-    // UCSR0B |= (1 << UDRIE0);
-    UDR0 = (motor1_speed >> 7);
+    // // UCSR0B |= (1 << UDRIE0);
+    // UDR0 = (motor1_speed >> 7);
     if (motor1_speed > 0) {
         ISR_timer0_compB_pointer = ISR_timer2_compA_main_forward;
     }else if (motor0_speed < 0) {

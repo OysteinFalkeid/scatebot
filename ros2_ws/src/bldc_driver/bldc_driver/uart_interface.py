@@ -16,12 +16,19 @@ class UART_interface(Node):
             QoSProfile(depth=10)
         )
         self.serial = serial.Serial('/dev/ttyACM0', timeout=1)
+        self.serial_read_timer = self.create_timer(0.01, self.serial_read_callback)
+    
+    def serial_read_callback(self):
+
+        while self.serial.in_waiting:
+            bytes_read = self.serial.read(1)
+            self.get_logger().info(format(ord(bytes_read), '08b'))
 
     def twist_callback(self, msg):
         angular: Vector3 = msg.angular
         linear: Vector3 = msg.linear
-        angular_list = [angular.x, angular.y, angular.z]
-        linear_list = [linear.x, linear.y, linear.z]
+        # angular_list = [angular.x, angular.y, angular.z]
+        # linear_list = [linear.x, linear.y, linear.z]
 
         linear_speed = linear.x
         angular_speed = angular.z
@@ -40,9 +47,6 @@ class UART_interface(Node):
         self.serial.write(bytes([int(byte_val_motor_0)]))
         self.serial.write(bytes([int(byte_val_motor_1)]))
         self.serial.write(bytes([int(0)]))
-
-        bytes_read = self.serial.read_all()
-        self.get_logger().info(str(bytes_read.hex()))
 
 def main(args=None):
     rclpy.init() 

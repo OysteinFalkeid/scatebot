@@ -22,6 +22,7 @@ void setupTimer0_0pre_interupts(void);
 void setupTimer0_0pre_pwm(void);
 
 void setupTimer1(void);
+void setupTimer1_UCSR0B(void);
 
 void SetupTimer2_8pre_interupts(void);
 

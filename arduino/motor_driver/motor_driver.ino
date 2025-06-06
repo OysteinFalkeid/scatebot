@@ -9,6 +9,8 @@
 #include "motor_driver_functions.h"
 #include "motor_driver_setup.h"
 
+volatile uint8_t hall_sense = 0;
+
 
 // Timer 0
 // Overflow interupt
@@ -29,11 +31,11 @@ ISR(TIMER0_COMPB_vect) {
   ISR_timer0_compB_pointer();
 }
 
-// // Timer 1
-// // Compare A interupt
-// ISR(TIMER1_COMPA_vect) {
-//   ISR_timer1_compA_pointer();
-// }
+// Timer 1
+// Compare A interupt
+ISR(TIMER1_COMPA_vect) {
+  ISR_timer1_compA_pointer();
+}
 
 
 // // Timer 2
@@ -55,12 +57,13 @@ ISR(USART_RX_vect) {
   ISR_uart_RX_pointer();
 }
 
-// // TX interupt
-// // runs every time TX buffer is readdy
-// ISR(USART_UDRE_vect) {
-//   UCSR0B &= ~(1 << UDRIE0);
-//   UDR0 = motor0_speed;
-// }
+// TX interupt
+// runs every time TX buffer is readdy
+ISR(USART_UDRE_vect) {
+  UCSR0B &= ~(1 << UDRIE0);
+  // UDR0 = motor0_speed;
+  UDR0 = hall_sense;
+}
 
 
 int main(void) {
@@ -104,21 +107,26 @@ int main(void) {
   // index_1 = 6;
   // // MOTOR1_PORT |= (1 << 5);
 
+  setupTimer1_UCSR0B();
+
   ISR_timer0_compA_pointer = ISR_timer0_compA_main_stop;
   // ISR_timer1_compA_pointer = Nullptr;
   ISR_timer0_compB_pointer = ISR_timer2_compA_main_stop;
   ISR_uart_RX_pointer = ISR_UART_RX_0;
+  ISR_timer1_compA_pointer = ISR_timer1_compA_UCSR0B;
 
   // MOTOR1_PORT |= (1 << 5);
 
   USART_init();
   // MOTOR1_PORT |= (1 << 5);
 
-  
+  DDRC = 0; // set all of port D as innput 
+  PORTC = (1 << PC0) | (1 << PC1) | (1 << PC2) | (1 << PC3) | (1 << PC4) | (1 << PC5);
   sei();
   
   while (true) {
     //idel
     sleep_mode();
+    hall_sense = PINC;
   }
 }
