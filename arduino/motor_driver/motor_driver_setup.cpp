@@ -4,7 +4,6 @@
 #include <avr/power.h>
 
 #include "defines.h"
-#include "masks.h"
 #include "motor_driver_setup.h"
 
 #define UBRR_VALUE ((F_CPU / (16UL * 9600)) - 1)

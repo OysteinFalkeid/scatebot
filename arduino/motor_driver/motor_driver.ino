@@ -9,7 +9,7 @@
 #include "motor_driver_functions.h"
 #include "motor_driver_setup.h"
 
-volatile uint8_t hall_sense = 0;
+uint8_t hall_sense = 0;
 
 
 // Timer 0
@@ -25,7 +25,7 @@ ISR(TIMER0_COMPA_vect) {
   ISR_timer0_compA_pointer();
 }
 
-// Compare A interupt
+// Compare B interupt
 ISR(TIMER0_COMPB_vect) {
   // MOTOR0_PORT = motor0_commutation[index_0];
   ISR_timer0_compB_pointer();
@@ -37,20 +37,6 @@ ISR(TIMER1_COMPA_vect) {
   ISR_timer1_compA_pointer();
 }
 
-
-// // Timer 2
-// // Overflow interupt
-// ISR(TIMER2_OVF_vect) {
-//   MOTOR1_PORT = motor1_floating[index_1];
-// }
-
-// // Compare A interupt
-// ISR(TIMER2_COMPA_vect) {
-//   // MOTOR1_PORT = motor1_commutation[0];
-//   ISR_timer2_compA_pointer();
-//   // ISR_timer2_compA_main_forward();
-// }
-
 // USART
 // RX interupt resieving data
 ISR(USART_RX_vect) {
@@ -61,7 +47,6 @@ ISR(USART_RX_vect) {
 // runs every time TX buffer is readdy
 ISR(USART_UDRE_vect) {
   UCSR0B &= ~(1 << UDRIE0);
-  // UDR0 = motor0_speed;
   UDR0 = hall_sense;
 }
 
@@ -73,55 +58,20 @@ int main(void) {
 
   setupPorts_motor0();
   setupPorts_motor1();
-  // MOTOR1_PORT |= (1 << 5);
 
-  // ISR_timer0_compA_pointer = ISR_timer0_compA_boot_0;
   setupTimer0_8pre_interupts();
-  // MOTOR1_PORT |= (1 << 5);
-
-  //temporary timer used to control the index of the motors. this will be done in the PWM timer with some math on the cpu.
-  // ISR_timer1_compA_pointer = ISR_timer1_compA_boot;
-  // setupTimer1();
-  // timer1_enabled = 1;
-  // MOTOR1_PORT |= (1 << 5);
-  
-  // ISR_timer2_compA_pointer = ISR_timer2_compA_boot_0;
-  // SetupTimer2_8pre_interupts();
-  // MOTOR1_PORT |= (1 << 5);
-  
-  // sei();
-  
-  // while (1) {
-  //   // motors shold whine with a 2kHz freqancy
-  //   sleep_mode();
-  //   // MOTOR1_PORT |= (1 << 5);
-  // }
-
-  // cli();
-
-  // Timer1_disable();
-  // timer1_enabled = 0;
-  // MOTOR0_DDR &= ~(MOTOR0_ALL_SIGNALS);
-  // MOTOR1_DDR &= ~(MOTOR1_ALL_SIGNALS);
-  // index_0 = 6;
-  // index_1 = 6;
-  // // MOTOR1_PORT |= (1 << 5);
-
   setupTimer1_UCSR0B();
+  USART_init();
 
   ISR_timer0_compA_pointer = ISR_timer0_compA_main_stop;
-  // ISR_timer1_compA_pointer = Nullptr;
   ISR_timer0_compB_pointer = ISR_timer2_compA_main_stop;
   ISR_uart_RX_pointer = ISR_UART_RX_0;
   ISR_timer1_compA_pointer = ISR_timer1_compA_UCSR0B;
 
-  // MOTOR1_PORT |= (1 << 5);
-
-  USART_init();
-  // MOTOR1_PORT |= (1 << 5);
 
   DDRC = 0; // set all of port D as innput 
   PORTC = (1 << PC0) | (1 << PC1) | (1 << PC2) | (1 << PC3) | (1 << PC4) | (1 << PC5);
+
   sei();
   
   while (true) {

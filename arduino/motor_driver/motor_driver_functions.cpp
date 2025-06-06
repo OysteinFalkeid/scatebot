@@ -7,20 +7,6 @@
 #include "motor_driver_setup.h"
 #include "motor_driver_functions.h"
 
-// is sinusodial waveform is wanted this is an array form 0 to pi/2 with 255 steps.
-// created by gpt
-// TODO manualy calculate to ensure corect table values
-#include <avr/pgmspace.h>
-const uint8_t sine_table[128] PROGMEM = {
-  0, 6, 13, 19, 25, 31, 38, 44, 50, 56, 62, 68, 74, 80, 86, 92,
-  98,104,109,115,120,126,131,137,142,147,152,157,162,167,172,176,
-  181,185,190,194,198,202,206,210,213,217,220,224,227,230,233,236,
- 239,241,244,246,248,250,252,254,255,255,256,256,256,256,255,254,
- 253,251,249,247,244,242,239,236,232,229,225,221,217,213,208,204,
- 199,194,189,183,178,172,166,160,154,148,142,135,129,122,116,109,
- 102, 95, 88, 81, 74, 67, 60, 53, 46, 39, 32, 25, 19, 12, 6, 0
-};
-
 
 // Global variables
 volatile uint8_t prescaler = 254;
@@ -37,10 +23,6 @@ volatile bool timer1_enabled = 0;
 
 volatile int16_t motor0_speed = 0;
 volatile int16_t motor1_speed = 0;
-
-
-volatile bool boot;
-volatile uint8_t index_boot = 0;
 
 
 // function pointers

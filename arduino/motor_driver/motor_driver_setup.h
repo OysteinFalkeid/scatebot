@@ -7,7 +7,6 @@
 #define MOTOR_SETUP
 
 #include "defines.h"
-#include "masks.h"
 
 #define UBRR_VALUE ((F_CPU / (16UL * 9600)) - 1)
 
