@@ -1,27 +1,112 @@
 {
     "configurations": [
-      {
-        "name": "ArduinoUno",
-        "includePath": [
-          "${workspaceFolder}/**",
-          "/home/oystein/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino",
-          "/home/oystein/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard",
-          "/home/oystein/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include"
-        ],
-        "defines": [
-          "ARDUINO=10805",
-          "F_CPU=16000000L",
-          "ARDUINO_AVR_UNO",
-          "ARDUINO_ARCH_AVR",
-          "__AVR_ATmega328P__",
-          "ARDUINO_LIB_DISCOVERY_PHASE"
-        ],
-        "compilerPath": "/home/oystein/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
-        "cStandard": "c11",
-        "cppStandard": "c++17",
-        "intelliSenseMode": "linux-gcc-x64"
-      }
+        {
+            "name": "ESP32",
+            "compilerPath": "~/.arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/*/bin/xtensa-esp32-elf-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "~/.arduino15/packages/esp32/hardware/esp32/*/cores/esp32/**",
+                "~/.arduino15/packages/esp32/hardware/esp32/*/libraries/**",
+                "~/.arduino15/packages/esp32/hardware/esp32/*/variants/esp32/**",
+                "~/.arduino15/packages/esp32/hardware/esp32/*/tools/sdk/esp32/include/**",
+                "~/.arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/*/xtensa-esp32-elf/include/**",
+                "~/Arduino/libraries/**"
+            ],
+            "defines": [
+                "PLATFORMIO=60111",
+                "ESP32",
+                "ESP_PLATFORM",
+                "ARDUINO_ARCH_ESP32",
+                "ARDUINO_ESP32_DEV",
+                "ARDUINO_BOARD=\"ESP32_DEV\"",
+                "ARDUINO_VARIANT=\"esp32\"",
+                "ARDUINO_PARTITION_default",
+                "F_CPU=240000000L",
+                "ARDUINO=10819",
+                "ARDUINO_USB_CDC_ON_BOOT=0",
+                "CORE_DEBUG_LEVEL=0",
+                "__XTENSA__"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "compilerArgs": [
+                "-mlongcalls",
+                "-Wno-frame-address"
+            ]
+        }
     ],
     "version": 4
-  }
-  
+}
+
+// {
+//     "configurations": [
+//         {
+//             "name": "esp32",
+//             "includePath": [
+//                 "${workspaceFolder}/**",
+//                 "/home/oystein/.arduino15/packages/esp32/hardware/esp32/3.2.0/cores/esp32",
+//                 "/home/oystein/.arduino15/packages/esp32/hardware/esp32/3.2.0/variants/doitESP32devkitV1",
+//                 "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include"
+//             ],
+//             "defines": [
+//                 "F_CPU=16000000L",
+//                 "ARDUINO_AVR_UNO",
+//                 "ARDUINO_ARCH_AVR",
+//                 "__AVR_ATmega328P__",
+//                 "ARDUINO_LIB_DISCOVERY_PHASE",
+//                 "ARDUINO=10805",
+//                 "ESP32"
+//             ],
+//             "compilerPath": "/home/oystein/.arduino15/packages/esp32/tools/xtensa-esp-elf-gdb/14.2_20240403/bin/xtensa-esp32-elf-gdb",
+//             "cStandard": "c11",
+//             "cppStandard": "c++17",
+//             "intelliSenseMode": "linux-gcc-x64"
+//         }
+//     ],
+//     "version": 4
+// }
+
+// {
+//   "configurations": [
+//     {
+//       "name": "Linux",
+//       "includePath": [
+//         "${workspaceFolder}/**",
+//         "~/.arduino15/packages/esp32/hardware/esp32/**",
+//         "~/.arduino15/packages/esp32/tools/**"
+//       ],
+//       "defines": [
+//         "ESP32"
+//       ],
+//       "compilerPath": "/usr/bin/xtensa-esp32-elf-g++",
+//       "cStandard": "gnu11",
+//       "cppStandard": "gnu++17"
+//     }
+//   ],
+//   "version": 4
+// }
+
+// {
+//   "configurations": [
+//     {
+//       "name": "ESP32",
+//       "includePath": [
+//         "${workspaceFolder}/**",
+//         "~/.arduino15/packages/esp32/hardware/esp32/3.2.0/cores/esp32/**",
+//         "~/.arduino15/packages/esp32/hardware/esp32/3.2.0/tools/**",
+//         "~/.arduino15/packages/esp32/hardware/esp32/3.2.0/components/driver/",
+//         "~/.arduino15/packages/esp32/hardware/esp32/3.2.0/components/soc/include"
+//       ],
+//       "defines": [
+//         "ESP32",
+//         "ARDUINO=10805"
+//       ],
+//       "compilerPath": "/usr/bin/xtensa-esp32-elf-gcc",
+//       "cStandard": "c11",
+//       "cppStandard": "c++17",
+//       "intelliSenseMode": "linux-gcc-x64"
+//     }
+//   ],
+//   "version": 4
+// }
