@@ -2,17 +2,27 @@
     "configurations": [
         {
             "name": "ESP32",
-            "compilerPath": "~/.arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/*/bin/xtensa-esp32-elf-gcc",
+            "compilerPath": "/home/oystein/.arduino15/packages/esp32/tools/esp-x32/2411/bin/xtensa-esp32-elf-gcc",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "includePath": [
                 "${workspaceFolder}/**",
-                "~/.arduino15/packages/esp32/hardware/esp32/*/cores/esp32/**",
-                "~/.arduino15/packages/esp32/hardware/esp32/*/libraries/**",
-                "~/.arduino15/packages/esp32/hardware/esp32/*/variants/esp32/**",
-                "~/.arduino15/packages/esp32/hardware/esp32/*/tools/sdk/esp32/include/**",
-                "~/.arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/*/xtensa-esp32-elf/include/**",
-                "~/Arduino/libraries/**"
+                "/home/oystein/.arduino15/packages/esp32/hardware/esp32/3.2.0/cores/esp32/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp-rv32/2411/riscv32-esp-elf/include/",
+                "/home/oystein/.arduino15/packages/esp32/hardware/esp32/3.2.0/variants/doitESP32devkitV1/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/qio_qspi/include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/**",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/newlib/platform_include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/freertos/FreeRTOS-Kernel/include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/freertos/config/include/freertos/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/freertos/config/xtensa/include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/esp_driver_mcpwm/include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/esp_common/include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/hal/include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/soc/esp32/include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/esp_hw_support/include/",
+                "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include/esp_driver_gpio/include/"
             ],
             "defines": [
                 "PLATFORMIO=60111",
@@ -38,75 +48,3 @@
     ],
     "version": 4
 }
-
-// {
-//     "configurations": [
-//         {
-//             "name": "esp32",
-//             "includePath": [
-//                 "${workspaceFolder}/**",
-//                 "/home/oystein/.arduino15/packages/esp32/hardware/esp32/3.2.0/cores/esp32",
-//                 "/home/oystein/.arduino15/packages/esp32/hardware/esp32/3.2.0/variants/doitESP32devkitV1",
-//                 "/home/oystein/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.4-2f7dcd86-v1/esp32/include"
-//             ],
-//             "defines": [
-//                 "F_CPU=16000000L",
-//                 "ARDUINO_AVR_UNO",
-//                 "ARDUINO_ARCH_AVR",
-//                 "__AVR_ATmega328P__",
-//                 "ARDUINO_LIB_DISCOVERY_PHASE",
-//                 "ARDUINO=10805",
-//                 "ESP32"
-//             ],
-//             "compilerPath": "/home/oystein/.arduino15/packages/esp32/tools/xtensa-esp-elf-gdb/14.2_20240403/bin/xtensa-esp32-elf-gdb",
-//             "cStandard": "c11",
-//             "cppStandard": "c++17",
-//             "intelliSenseMode": "linux-gcc-x64"
-//         }
-//     ],
-//     "version": 4
-// }
-
-// {
-//   "configurations": [
-//     {
-//       "name": "Linux",
-//       "includePath": [
-//         "${workspaceFolder}/**",
-//         "~/.arduino15/packages/esp32/hardware/esp32/**",
-//         "~/.arduino15/packages/esp32/tools/**"
-//       ],
-//       "defines": [
-//         "ESP32"
-//       ],
-//       "compilerPath": "/usr/bin/xtensa-esp32-elf-g++",
-//       "cStandard": "gnu11",
-//       "cppStandard": "gnu++17"
-//     }
-//   ],
-//   "version": 4
-// }
-
-// {
-//   "configurations": [
-//     {
-//       "name": "ESP32",
-//       "includePath": [
-//         "${workspaceFolder}/**",
-//         "~/.arduino15/packages/esp32/hardware/esp32/3.2.0/cores/esp32/**",
-//         "~/.arduino15/packages/esp32/hardware/esp32/3.2.0/tools/**",
-//         "~/.arduino15/packages/esp32/hardware/esp32/3.2.0/components/driver/",
-//         "~/.arduino15/packages/esp32/hardware/esp32/3.2.0/components/soc/include"
-//       ],
-//       "defines": [
-//         "ESP32",
-//         "ARDUINO=10805"
-//       ],
-//       "compilerPath": "/usr/bin/xtensa-esp32-elf-gcc",
-//       "cStandard": "c11",
-//       "cppStandard": "c++17",
-//       "intelliSenseMode": "linux-gcc-x64"
-//     }
-//   ],
-//   "version": 4
-// }
