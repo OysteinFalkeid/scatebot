@@ -23,12 +23,11 @@ class UART_interface(Node):
         while self.serial.in_waiting:
             bytes_read = self.serial.read(1)
             # self.get_logger().info(format(ord(bytes_read), '08b'))
+            self.get.logger().info(str(bytes_read))
 
     def twist_callback(self, msg):
         angular: Vector3 = msg.angular
         linear: Vector3 = msg.linear
-        # angular_list = [angular.x, angular.y, angular.z]
-        # linear_list = [linear.x, linear.y, linear.z]
 
         linear_speed = linear.x
         angular_speed = angular.z
@@ -41,12 +40,15 @@ class UART_interface(Node):
         if abs(angular_speed) < 0.0001:
             byte_val_motor_1 = 0.0
 
-        self.get_logger().info(str(int(byte_val_motor_0)) + " " + str(int(byte_val_motor_1)))
+        # self.get_logger().info(str(int(byte_val_motor_0)) + " " + str(int(byte_val_motor_1)))
 
         self.serial.write(bytes([int(255)]))
         self.serial.write(bytes([int(byte_val_motor_0)]))
         self.serial.write(bytes([int(byte_val_motor_1)]))
         self.serial.write(bytes([int(0)]))
+
+
+
 
 def main(args=None):
     rclpy.init() 

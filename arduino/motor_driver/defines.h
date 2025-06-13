@@ -2,33 +2,37 @@
 #ifndef MOTOR_DEFINES
 #define MOTOR_DEFINES
 
-constexpr int BAUD_300 = 300;
-#define BAUD_600 600
-#define BAUD_750 750
-#define BAUD_1200 1200
-#define BAUD_2400 2400
-#define BAUD_4800 4800
-#define BAUD_9600 9600
-#define BAUD_19200 19200
-#define BAUD_31250 31250
-#define BAUD_38400 38400
-#define BAUD_57600 57600
-#define BAUD_74880 74880
-#define BAUD_115200 115200
+#include <driver/mcpwm_prelude.h>
+#include <driver/gpio.h>
+#include <Arduino.h>
 
-#define BAUD BAUD_115200
-#define BAUD_BOOT BAUD_115200
+constexpr uint32_t BAUD_300 = 300;
+constexpr uint32_t BAUD_600 = 600;
+constexpr uint32_t BAUD_750 = 750;
+constexpr uint32_t BAUD_1200 = 1200;
+constexpr uint32_t BAUD_2400 = 2400;
+constexpr uint32_t BAUD_4800 = 4800;
+constexpr uint32_t BAUD_9600 = 9600;
+constexpr uint32_t BAUD_19200 = 19200;
+constexpr uint32_t BAUD_31250 = 31250;
+constexpr uint32_t BAUD_38400 = 38400;
+constexpr uint32_t BAUD_57600 = 57600;
+constexpr uint32_t BAUD_74880 = 74880;
+constexpr uint32_t BAUD_115200 = 115200;
 
-#define FORWARD true
-#define REVERSE false
+constexpr uint32_t BAUD = BAUD_115200;
+constexpr uint32_t BAUD_BOOT = BAUD_115200;
 
-#define START true
-#define STOP false
+constexpr bool FORWARD = true;
+constexpr bool REVERSE = false;
 
-#define INTR_LOW_PRI 0
+constexpr bool START = true;
+constexpr bool STOP = false;
 
-#define MCPWM_0 0
-#define MCPWM_1 1
+constexpr uint32_t INTR_LOW_PRI = 0;
+
+constexpr uint32_t MCPWM_0 = 0;
+constexpr uint32_t MCPWM_1 = 1;
 
 // Define GPIO pins for BLDC motor control
 #define PWM_0_AH_PIN    GPIO_NUM_21  // Phase A High
@@ -57,12 +61,22 @@ constexpr int BAUD_300 = 300;
 #define HALL_1C_PIN    GPIO_NUM_35  // GPIO34
 
 // BLDC control parameters
-#define PWM_FREQUENCY     20000    // 20kHz PWM frequency
-#define TIMER_RESOLUTION  1000000  // 1MHz timer resolution (1us per tick)
-#define TIMER_PERIOD_TICK  (TIMER_RESOLUTION / PWM_FREQUENCY)
-#define DEAD_TIME_TICKS   0
-#define DUTY_CYCLE_MAX    5      // Maximum duty cycle (5%)
-#define SINE_TABLE_SIZE   360    // Sine lookup table size (1 degree resolution)
+constexpr uint32_t PWM_FREQUENCY = 20000;    // 20kHz PWM frequency
+constexpr uint32_t TIMER_RESOLUTION = 160000000;  // 1MHz timer resolution (1us per tick)
+constexpr uint32_t TIMER_PERIOD_TICK = (TIMER_RESOLUTION / PWM_FREQUENCY);
+constexpr uint32_t DEAD_TIME_TICKS = 0;
+constexpr uint32_t DUTY_CYCLE_MAX_PROSENT = 2;      // Maximum duty cycle (5%)
+constexpr uint32_t SINE_TABLE_SIZE = 3600;    // Sine lookup table size (1 degree resolution)
+constexpr uint32_t DUTY_CYCLE_MAX_VALUE = TIMER_PERIOD_TICK * 3 / 100;
+
+constexpr uint32_t NUMBER_OF_STEPS_PER_ROTATION = 30;
+
+constexpr uint32_t HALL_SENSE_PATTERN_0 = (0 << 0) | (0 << 1) | (0 << 2);
+constexpr uint32_t HALL_SENSE_PATTERN_1 = (0 << 0) | (0 << 1) | (0 << 2);
+constexpr uint32_t HALL_SENSE_PATTERN_2 = (0 << 0) | (0 << 1) | (0 << 2);
+constexpr uint32_t HALL_SENSE_PATTERN_3 = (0 << 0) | (0 << 1) | (0 << 2);
+constexpr uint32_t HALL_SENSE_PATTERN_4 = (0 << 0) | (0 << 1) | (0 << 2);
+constexpr uint32_t HALL_SENSE_PATTERN_5 = (0 << 0) | (0 << 1) | (0 << 2);
 
 
 
