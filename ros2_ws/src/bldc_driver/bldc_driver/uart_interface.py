@@ -15,15 +15,23 @@ class UART_interface(Node):
             self.twist_callback,
             QoSProfile(depth=10)
         )
-        self.serial = serial.Serial('/dev/ttyACM0', timeout=1)
+        self.serial = serial.Serial('/dev/ttyUSB0', baudrate=115200,timeout=1)
         self.serial_read_timer = self.create_timer(0.01, self.serial_read_callback)
     
     def serial_read_callback(self):
 
-        while self.serial.in_waiting:
-            bytes_read = self.serial.read(1)
-            # self.get_logger().info(format(ord(bytes_read), '08b'))
-            self.get.logger().info(str(bytes_read))
+        while self.serial.in_waiting:     
+            line = self.serial.readline()         # Read a line (bytes)
+
+            try:
+                decoded_line = line.decode('utf-8').strip()  # Convert to string and strip newline
+            except:
+                decoded_line = ""
+
+            if decoded_line[0] == "H":
+                self.get_logger().info(format(line[1], '08b')) 
+            else:
+                self.get_logger().info(decoded_line)
 
     def twist_callback(self, msg):
         angular: Vector3 = msg.angular

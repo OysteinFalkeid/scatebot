@@ -14,6 +14,14 @@ uint32_t motor_0_angle_increment = 1;  // Angle increment per update
 bool motor_0_hall_values[3] = {false, false, false};
 uint32_t motor_0_hall_angle_offset = 0; // Angle offset from hall sensors
 gpio_num_t hall_0_sense_pins[3] = {HALL_0A_PIN, HALL_0B_PIN, HALL_0C_PIN};
+uint8_t hall_0_sense_pins_pattern[6] = {
+  HALL_SENSE_PATTERN_0,
+  HALL_SENSE_PATTERN_1,
+  HALL_SENSE_PATTERN_2,
+  HALL_SENSE_PATTERN_3,
+  HALL_SENSE_PATTERN_4,
+  HALL_SENSE_PATTERN_5
+};
 
 
 // MCPWM 1 handles and configuration
@@ -38,6 +46,8 @@ void setup() {
   Setup_seriel_at_boot(BAUD);
 
   Initialize_sine_table(sine_table);
+
+  // pinMode();
 
   error = Setup_GPIO_pins_output(motor_0_gpio_pins);
   if (error != ESP_OK) {
@@ -97,11 +107,21 @@ void setup() {
 
 void loop() {
   static uint32_t global_counter;
+  static uint32_t counter_right_wheel = 0;
   // put your main code here, to run repeatedly:
   esp_err_t error = ESP_OK;
   global_counter += 1;
   if (global_counter > 1000) {
     global_counter = 1;
+  }
+
+  if (!(global_counter % 10)) {
+    uint8_t hall_00_sense_pin = digitalRead(hall_0_sense_pins[0]);
+    uint8_t hall_01_sense_pin = digitalRead(hall_0_sense_pins[1]);
+    uint8_t hall_02_sense_pin = digitalRead(hall_0_sense_pins[2]);
+  
+    uint8_t hall_0_sense_pin = (hall_00_sense_pin << 0) | (hall_01_sense_pin << 1) | (hall_02_sense_pin << 2);
+    Serial.printf("H%c\n", HALL_SENSE_DESIMAL_TO_POSITION[hall_0_sense_pin]);
   }
 
   delayMicroseconds(6000);

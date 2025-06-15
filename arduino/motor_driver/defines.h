@@ -71,12 +71,14 @@ constexpr uint32_t DUTY_CYCLE_MAX_VALUE = TIMER_PERIOD_TICK * 3 / 100;
 
 constexpr uint32_t NUMBER_OF_STEPS_PER_ROTATION = 30;
 
-constexpr uint32_t HALL_SENSE_PATTERN_0 = (0 << 0) | (0 << 1) | (0 << 2);
-constexpr uint32_t HALL_SENSE_PATTERN_1 = (0 << 0) | (0 << 1) | (0 << 2);
-constexpr uint32_t HALL_SENSE_PATTERN_2 = (0 << 0) | (0 << 1) | (0 << 2);
-constexpr uint32_t HALL_SENSE_PATTERN_3 = (0 << 0) | (0 << 1) | (0 << 2);
-constexpr uint32_t HALL_SENSE_PATTERN_4 = (0 << 0) | (0 << 1) | (0 << 2);
-constexpr uint32_t HALL_SENSE_PATTERN_5 = (0 << 0) | (0 << 1) | (0 << 2);
+constexpr uint32_t HALL_SENSE_PATTERN_0 = (0 << 2) | (1 << 1) | (1 << 0);
+constexpr uint32_t HALL_SENSE_PATTERN_1 = (0 << 2) | (1 << 1) | (0 << 0);
+constexpr uint32_t HALL_SENSE_PATTERN_2 = (1 << 2) | (1 << 1) | (0 << 0);
+constexpr uint32_t HALL_SENSE_PATTERN_3 = (1 << 2) | (0 << 1) | (0 << 0);
+constexpr uint32_t HALL_SENSE_PATTERN_4 = (1 << 2) | (0 << 1) | (1 << 0);
+constexpr uint32_t HALL_SENSE_PATTERN_5 = (0 << 2) | (0 << 1) | (1 << 0);
+constexpr uint32_t HALL_SENSE_DESIMAL_ARRAY[6] = {1, 3, 2, 6, 4, 5};
+constexpr uint32_t HALL_SENSE_DESIMAL_TO_POSITION[8] = {8, 0, 2, 1, 4, 5, 3, 8};
 
 
 
