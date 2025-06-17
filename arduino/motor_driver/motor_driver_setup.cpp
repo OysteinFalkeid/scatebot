@@ -232,5 +232,29 @@ void Setup_seriel_at_boot(uint32_t baud) {
 }
 
 
+esp_err_t Setup_motor_timer_calback(void (*motor_control_callback)(void* args), esp_timer_handle_t esp_timer_handel, uint32_t micros) {
+    // Initialize timer
+    esp_timer_create_args_t timer_args = {
+        .callback = motor_control_callback,
+        .arg = NULL,
+        .dispatch_method = ESP_TIMER_TASK,
+        .name = "motor_ctrl",
+        .skip_unhandled_events = true
+    };
+
+    esp_err_t ret = ESP_OK;
+
+    ret = esp_timer_create(&timer_args, &esp_timer_handel);
+    if (ret != ESP_OK)
+        Serial.printf("Failed to initialize general timer for consistant interupts for motor control: %s", esp_err_to_name(ret));
+        return ret;
+        
+    ret = esp_timer_start_periodic(esp_timer_handel, micros);
+    if (ret != ESP_OK)
+        Serial.printf("Failed to start general timer periode time: %d, %s", micros, esp_err_to_name(ret));
+        return ret;
+    
+    return ret;
+}
 
 

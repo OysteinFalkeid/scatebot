@@ -15,21 +15,24 @@ class UART_interface(Node):
             self.twist_callback,
             QoSProfile(depth=10)
         )
-        self.serial = serial.Serial('/dev/ttyUSB0', baudrate=115200,timeout=1)
-        self.serial_read_timer = self.create_timer(0.01, self.serial_read_callback)
+        self.serial = serial.Serial('/dev/ttyUSB0', baudrate=115200,timeout=0.01)
+        self.serial_read_timer = self.create_timer(0.05, self.serial_read_callback)
     
     def serial_read_callback(self):
-
-        while self.serial.in_waiting:     
+        active = 1
+        while self.serial.in_waiting and active:     
+            active -= 1
             line = self.serial.readline()         # Read a line (bytes)
 
             try:
-                decoded_line = line.decode('utf-8').strip()  # Convert to string and strip newline
+                decoded_line: str = line.decode('utf-8').strip()  # Convert to string and strip newline
             except:
-                decoded_line = ""
-
-            if decoded_line[0] == "H":
-                self.get_logger().info(format(line[1], '08b')) 
+                decoded_line: str = line.hex()
+            
+            if len(decoded_line):
+                active = self.serial.in_waiting
+                if decoded_line[0] == "H":
+                    self.get_logger().info(format(line[1], '08b')) 
             else:
                 self.get_logger().info(decoded_line)
 

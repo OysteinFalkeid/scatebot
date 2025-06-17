@@ -11,7 +11,7 @@ class GamepadTalker(Node):
         super().__init__('gamepad_talker')
 
         pygame.init()
-        self.reconector = self.create_timer(0.5, self.reconect)
+        self.reconector = self.create_timer(5, self.reconect)
         self.gamepad_connected = pygame.joystick.get_count() > 0
         if self.gamepad_connected:
             self.get_logger().info("gamepad found")
@@ -31,6 +31,8 @@ class GamepadTalker(Node):
             if self.gamepad_connected:
                 self.get_logger().info("gamepad found")
                 self.gamepad = pygame.joystick.Joystick(0)
+            else:
+                self.get_logger().warning("waiting for gamepad")
 
     def timer_callback(self):
         self.gamepad_connected = pygame.joystick.get_count() > 0

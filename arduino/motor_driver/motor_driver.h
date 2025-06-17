@@ -1,6 +1,7 @@
 #include <driver/mcpwm_prelude.h>
 #include <driver/gpio.h>
 #include <Arduino.h>
+#include <esp_timer.h>
 
 #include "defines.h"
 #include "motor_driver_setup.h"

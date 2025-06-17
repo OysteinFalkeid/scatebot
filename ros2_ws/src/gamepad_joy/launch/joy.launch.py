@@ -2,6 +2,7 @@
 
 from launch import LaunchDescription
 import launch_ros.actions
+from launch.actions import SetEnvironmentVariable
 
 def generate_launch_description():
     virtual_gamepad_node = launch_ros.actions.Node(
@@ -12,5 +13,6 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        SetEnvironmentVariable('SDL_AUDIODRIVER', 'dummy'),
         virtual_gamepad_node
     ])

@@ -24,4 +24,6 @@ esp_err_t Setup_GPIO_pins_input(gpio_num_t* gpio_pins);
 
 void Setup_seriel_at_boot(uint32_t baud);
 
+esp_err_t Setup_motor_timer_calback(void (*motor_control_callback)(void* args), esp_timer_handle_t esp_timer_handel, uint32_t micros);
+
 #endif

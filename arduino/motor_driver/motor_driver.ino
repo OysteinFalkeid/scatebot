@@ -39,6 +39,32 @@ bool motor_1_hall_values[3] = {false, false, false};
 uint32_t motor_1_hall_angle_offset = 0; // Angle offset from hall sensors
 gpio_num_t hall_1_sense_pins[3] = {HALL_1A_PIN, HALL_1B_PIN, HALL_1C_PIN};
 
+uint32_t global_counter = 0;
+uint32_t counter_right_wheel = 0;
+uint32_t right_wheel_sens_position = 0;
+
+esp_timer_handle_t motor_control_timer_handel;
+
+void motor_control_callback(void* args) {
+  // Very relaxed timing requirements at low speeds
+  // electrical_angle += angle_increment;
+  // if (electrical_angle >= 360.0f) electrical_angle -= 360.0f;
+  
+  // Update PWM duty cycles
+  // update_sine_pwm_duties(electrical_angle);
+
+  uint8_t hall_00_sense_pin = digitalRead(hall_0_sense_pins[0]);
+  uint8_t hall_01_sense_pin = digitalRead(hall_0_sense_pins[1]);
+  uint8_t hall_02_sense_pin = digitalRead(hall_0_sense_pins[2]);
+
+  uint8_t hall_0_sense_pin = (hall_00_sense_pin << 0) | (hall_01_sense_pin << 1) | (hall_02_sense_pin << 2);
+  Serial.printf("H%c\n", HALL_SENSE_DESIMAL_TO_POSITION[hall_0_sense_pin]);
+}
+
+
+
+
+
 void setup() {
   // put your setup code here, to run once:
   esp_err_t error = ESP_OK;
@@ -96,18 +122,47 @@ void setup() {
     motor_1_gpio_pins
   );
 
+  
   if (error == ESP_OK) {
     Serial.println("MCPWM 0 initialized successfully");
   } else {
     Serial.println("MCPWM 0 initialization failed!");
     esp_restart();
   }
+
+  // error = Setup_motor_timer_calback(motor_control_callback, motor_control_timer_handel, MICROS_BETWEN_TIMER_INTERUPTS);  
+  // if (error != ESP_OK)
+  //   Serial.println("Failed to start general timer");
+  
+  esp_timer_create_args_t timer_args = {
+    .callback = motor_control_callback,
+    .arg = NULL,
+    .dispatch_method = ESP_TIMER_TASK,
+    .name = "motor_ctrl",
+    .skip_unhandled_events = true
+  };
+
+  error = esp_timer_create(&timer_args, &motor_control_timer_handel);
+  if (error != ESP_OK)
+      Serial.printf("Failed to initialize general timer for consistant interupts for motor control: %s\n", esp_err_to_name(error));
+      
+  error = esp_timer_start_periodic(motor_control_timer_handel, MICROS_BETWEN_TIMER_INTERUPTS);
+  if (error != ESP_OK)
+      Serial.printf("Failed to start general timer periode time: %d, %s\n", micros, esp_err_to_name(error));
+    
+
+
+  if (error == ESP_OK) {
+    Serial.println("setup successfully");
+  } else {
+    Serial.println("setup failed!");
+    esp_restart();
+  }
+
 }
 
 
 void loop() {
-  static uint32_t global_counter;
-  static uint32_t counter_right_wheel = 0;
   // put your main code here, to run repeatedly:
   esp_err_t error = ESP_OK;
   global_counter += 1;
@@ -115,14 +170,25 @@ void loop() {
     global_counter = 1;
   }
 
-  if (!(global_counter % 10)) {
-    uint8_t hall_00_sense_pin = digitalRead(hall_0_sense_pins[0]);
-    uint8_t hall_01_sense_pin = digitalRead(hall_0_sense_pins[1]);
-    uint8_t hall_02_sense_pin = digitalRead(hall_0_sense_pins[2]);
+  // if (!(global_counter % 10)) {
+  //   uint8_t hall_00_sense_pin = digitalRead(hall_0_sense_pins[0]);
+  //   uint8_t hall_01_sense_pin = digitalRead(hall_0_sense_pins[1]);
+  //   uint8_t hall_02_sense_pin = digitalRead(hall_0_sense_pins[2]);
   
-    uint8_t hall_0_sense_pin = (hall_00_sense_pin << 0) | (hall_01_sense_pin << 1) | (hall_02_sense_pin << 2);
-    Serial.printf("H%c\n", HALL_SENSE_DESIMAL_TO_POSITION[hall_0_sense_pin]);
-  }
+  //   uint8_t hall_0_sense_pin = (hall_00_sense_pin << 0) | (hall_01_sense_pin << 1) | (hall_02_sense_pin << 2);
+  //   Serial.printf("H%c\n", HALL_SENSE_DESIMAL_TO_POSITION[hall_0_sense_pin]);
+  //   // uint32_t right_wheel_sens_position_new = HALL_SENSE_DESIMAL_TO_POSITION[hall_0_sense_pin];
+
+  //   // if (right_wheel_sens_position_new = 0) {
+  //   //   if (right_wheel_sens_position = 5) {
+  //   //     // rotation forward
+  //   //   } else if (right_wheel_sens_position = 1) {
+  //   //     // rotation reverse
+  //   //   }
+  //   // } else if (right_wheel_sens_position > right_wheel_sens_position_new){
+
+  //   // }
+  // }
 
   delayMicroseconds(6000);
 
