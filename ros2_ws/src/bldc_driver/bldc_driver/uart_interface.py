@@ -31,10 +31,10 @@ class UART_interface(Node):
             
             if len(decoded_line):
                 active = self.serial.in_waiting
-                if decoded_line[0] == "H":
-                    self.get_logger().info(format(line[1], '08b')) 
-            else:
-                self.get_logger().info(decoded_line)
+                # if decoded_line[0] == "H":
+                    # self.get_logger().info(format(line[1], '08b')) 
+            # else:
+                # self.get_logger().info(decoded_line)
 
     def twist_callback(self, msg):
         angular: Vector3 = msg.angular
