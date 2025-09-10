@@ -172,10 +172,10 @@ esp_err_t setup_MCPWM(
 }
 
 
-void Initialize_sine_table(uint32_t* sine_table) {
+void Initialize_sine_table(float* sine_table) {
   // Pre-calculate sine values for smooth AC generation
   for (uint32_t i = 0; i < SINE_TABLE_SIZE; i++) {
-    sine_table[i] = (uint32_t) sin(i * (PI / (SINE_TABLE_SIZE / 2)));
+    sine_table[i] = (float) sin(i * (PI / (SINE_TABLE_SIZE / 2)));
   }
   Serial.println("Sine lookup table initialized");
 }

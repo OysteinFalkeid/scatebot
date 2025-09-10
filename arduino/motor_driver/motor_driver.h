@@ -27,7 +27,7 @@ mcpwm_gen_handle_t        mcpwm_gen_handles_1[6];   // 2 generators per operator
 
 
 // Sine lookup table for smooth AC generation
-uint32_t sine_table[SINE_TABLE_SIZE];
+float sine_table[SINE_TABLE_SIZE];
 
 uint32_t hall_sense_pattern[6] = {HALL_SENSE_PATTERN_0, HALL_SENSE_PATTERN_1, HALL_SENSE_PATTERN_2, HALL_SENSE_PATTERN_3, HALL_SENSE_PATTERN_4, HALL_SENSE_PATTERN_5};
 

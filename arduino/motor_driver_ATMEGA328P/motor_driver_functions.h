@@ -15,7 +15,7 @@
 // created by gpt
 // TODO manualy calculate to ensure corect table values
 #include <avr/pgmspace.h>
-extern const uint8_t sine_table[128];
+extern const float sine_table[128];
 
 
 // Global variables

@@ -166,8 +166,8 @@ void loop() {
   // put your main code here, to run repeatedly:
   esp_err_t error = ESP_OK;
   global_counter += 1;
-  if (global_counter > 1000) {
-    global_counter = 1;
+  if (global_counter > 359) {
+    global_counter = 0;
   }
 
   // if (!(global_counter % 10)) {
@@ -190,16 +190,15 @@ void loop() {
   //   // }
   // }
 
-  delayMicroseconds(6000);
+  delayMicroseconds(10000);
 
-  uint32_t duty = (uint32_t) DUTY_CYCLE_MAX_VALUE * global_counter / 1000;
-
-  error = Set_compare_value(mcpwm_cmpr_handles_0, duty);
+  
+  error = Set_compare_value(mcpwm_cmpr_handles_0, global_counter, sine_table);
   if (error != ESP_OK) {
     Serial.println("Failed to set comare value");
   }
 
-  error = Set_compare_value(mcpwm_cmpr_handles_1, duty);
+  error = Set_compare_value(mcpwm_cmpr_handles_1, global_counter, sine_table);
   if (error != ESP_OK) {
     Serial.println("Failed to set comare value");
   }
