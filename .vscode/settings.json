@@ -2,5 +2,6 @@
     "files.associations": {
         "istream": "cpp",
         "ostream": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/home/oystein/scatebot/ros2_ws/src/gazebo"
 }

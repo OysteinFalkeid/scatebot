@@ -17,7 +17,7 @@
     gpio_num_t              motor_gpio_pins[6]
 );
 
-void Initialize_sine_table(uint32_t* sine_table);
+void Initialize_sine_table(float* sine_table);
 
 esp_err_t Setup_GPIO_pins_output(gpio_num_t* gpio_pins);
 esp_err_t Setup_GPIO_pins_input(gpio_num_t* gpio_pins);

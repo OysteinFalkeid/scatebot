@@ -65,9 +65,9 @@ constexpr uint32_t PWM_FREQUENCY = 20000;    // 20kHz PWM frequency
 constexpr uint32_t TIMER_RESOLUTION = 160000000;  // 1MHz timer resolution (1us per tick)
 constexpr uint32_t TIMER_PERIOD_TICK = (TIMER_RESOLUTION / PWM_FREQUENCY);
 constexpr uint32_t DEAD_TIME_TICKS = 0;
-constexpr uint32_t DUTY_CYCLE_MAX_PROSENT = 2;      // Maximum duty cycle (5%)
+constexpr uint32_t DUTY_CYCLE_MAX_PROSENT = 90;      // Maximum duty cycle (5%)
 constexpr uint32_t SINE_TABLE_SIZE = 360;    // Sine lookup table size (1 degree resolution)
-constexpr uint32_t DUTY_CYCLE_MAX_VALUE = TIMER_PERIOD_TICK * 3 / 100;
+constexpr uint32_t DUTY_CYCLE_MAX_VALUE = TIMER_PERIOD_TICK * DUTY_CYCLE_MAX_PROSENT / 100;
 constexpr uint32_t FREQUENCEY_TIMER_INTERUPTS = 100; //Hz
 constexpr uint32_t MICROS_BETWEN_TIMER_INTERUPTS = (uint32_t)(((float)1.0/(float)FREQUENCEY_TIMER_INTERUPTS)*(float)1000000); // 1/Hz * 1000000 microsecond 
 
